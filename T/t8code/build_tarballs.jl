@@ -48,7 +48,7 @@ else
 fi
 
 # Run configure
-./configure --prefix=${prefix} --build=${MACHTYPE} --host=${target} --disable-static --without-blas ${mpiopts}
+./configure --prefix=${prefix} --build=${MACHTYPE} --host=${target} --disable-static --without-blas --with-sc=/workspace/destdir --with-p4est=/workspace/destdir ${mpiopts}
 
 # Build & install
 make -j${nproc} "${FLAGS[@]}"
@@ -65,33 +65,34 @@ fi
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-    Platform("i686", "linux"; libc = "glibc"),
+    # Platform("i686", "linux"; libc = "glibc"),
     Platform("x86_64", "linux"; libc = "glibc"),
-    Platform("aarch64", "linux"; libc = "glibc"),
-    Platform("armv6l", "linux"; call_abi = "eabihf", libc = "glibc"),
-    Platform("armv7l", "linux"; call_abi = "eabihf", libc = "glibc"),
-    Platform("powerpc64le", "linux"; libc = "glibc"),
-    Platform("i686", "linux"; libc = "musl"),
-    Platform("x86_64", "linux"; libc = "musl"),
-    Platform("aarch64", "linux"; libc = "musl"),
-    Platform("armv6l", "linux"; call_abi = "eabihf", libc = "musl"),
-    Platform("armv7l", "linux"; call_abi = "eabihf", libc = "musl"),
-    Platform("x86_64", "macos"; ),
-    Platform("aarch64", "macos"; ),
-    Platform("x86_64", "freebsd"; ),
-    Platform("x86_64", "windows"; )
+    # Platform("aarch64", "linux"; libc = "glibc"),
+    # Platform("armv6l", "linux"; call_abi = "eabihf", libc = "glibc"),
+    # Platform("armv7l", "linux"; call_abi = "eabihf", libc = "glibc"),
+    # Platform("powerpc64le", "linux"; libc = "glibc"),
+    # Platform("i686", "linux"; libc = "musl"),
+    # Platform("x86_64", "linux"; libc = "musl"),
+    # Platform("aarch64", "linux"; libc = "musl"),
+    # Platform("armv6l", "linux"; call_abi = "eabihf", libc = "musl"),
+    # Platform("armv7l", "linux"; call_abi = "eabihf", libc = "musl"),
+    # Platform("x86_64", "macos"; ),
+    # Platform("aarch64", "macos"; ),
+    # Platform("x86_64", "freebsd"; ),
+    # Platform("x86_64", "windows"; )
 ]
 
 
 # The products that we will ensure are always built
 products = [
     LibraryProduct("libt8", :libt8),
-    LibraryProduct("libsc", :libsc),
-    LibraryProduct("libp4est", :libp4est)
+    # LibraryProduct("libsc", :libsc),
+    # LibraryProduct("libp4est", :libp4est)
 ]
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
+    Dependency(PackageSpec(name="P4est_jll", uuid="6b5a15aa-cf52-5330-8376-5e5d90283449"))
     Dependency(PackageSpec(name="MPICH_jll", uuid="7cb0a576-ebde-5e09-9194-50597f1243b4"))
     Dependency(PackageSpec(name="MicrosoftMPI_jll", uuid="9237b28f-5490-5468-be7b-bb81f5f5e6cf"))
     Dependency(PackageSpec(name="Zlib_jll", uuid="83775a58-1f1d-513f-b197-d71354ab007a"))
